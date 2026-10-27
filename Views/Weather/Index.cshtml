@@ -1,0 +1,159 @@
+﻿@{
+    ViewData["Title"] = "Previsioni Meteo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    // I parametri di query (latitude e longitude) possono essere utili, se ti servono per altro.
+    var latitude = Context.Request.Query["latitude"];
+    var longitude = Context.Request.Query["longitude"];
+}
+
+@model EasyWeather.Views.Weather.HourlyForecastByCoordinatesModel
+
+<div class="back">
+    <a style="display: flex; align-self: center; gap: 2px; text-decoration: none;" href="/">
+        <img height="20" src="/img/back.png" alt="Cerca" />
+        <p>Indietro</p>
+    </a>
+</div>
+
+<div class="content" id="meteoContent">
+    <main>
+        <p class="luogo"><span id="cityName">@Model.Forecast.Location.Name</span></p>
+        <img width="200" class="mainWeatherIcon" data-description="@Model.Forecast.Weathers[0].Description" src="/img/meteo/meteo-sun-cloud.png" alt="Icona Meteo" />
+        <div class="gradi">
+            <h1 id="temperature">@Model.Forecast.Weathers[0].Temperature.Current.ToString("0")°C</h1>
+            <p style="text-transform: capitalize;" id="description">@Model.Forecast.Weathers[0].Description</p>
+        </div>
+        <div class="trioData">
+            <span>
+                <img width="25" src="/img/wind.png" alt="Vento" />
+                <p id="windSpeed">@Model.Forecast.Weathers[0].Wind.Speed m/s</p>
+            </span>
+            <span>
+                <img width="25" src="/img/drop.png" alt="Pioggia" />
+                <p id="precipitation">@(Model.Forecast.Weathers[0].ProbabilityPrecipitation * 100)%</p>
+            </span>
+            <span>
+                <img width="25" src="/img/sun.png" alt="Sole" />
+                <p id="sunHours">@((Model.Forecast.Sunset - Model.Forecast.Sunrise) / 3600) h</p>
+            </span>
+        </div>
+    </main>
+
+    <div class="hourly">
+        <h1>Previsioni Orarie</h1>
+        <div class="framecard">
+            <div class="cards" id="hourlyCards">
+                @foreach (var hourly in Model.Forecast.Weathers)
+                {
+                    <!-- Inseriamo il valore della descrizione in un attributo data-description -->
+                <div class="card" data-description="@hourly.Description">
+                    <p class="time">
+                        @DateTimeOffset.FromUnixTimeSeconds(hourly.DeltaTime).ToLocalTime().ToString("HH:mm")
+                    </p>
+                    <img class="icon weatherIcon" width="50" src="/img/meteo/meteo-sun-cloud.png" alt="Icona Meteo" />
+                    <p class="temp">@hourly.Temperature.Current.ToString("0")°C</p>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // Set icona meteo principale
+            let mainDesc = $(".mainWeatherIcon").data("description") || "";
+            mainDesc = mainDesc.toLowerCase().trim();
+
+            let mainIconPath = "/img/meteo/default.png";
+
+            switch (mainDesc) {
+                case "cielo sereno":
+                    mainIconPath = "/img/meteo/clear.png";
+                    break;
+                case "poche nuvole":
+                    mainIconPath = "/img/meteo/few-clouds.png";
+                    break;
+                case "nuvole sparse":
+                case "nubi sparse":
+                    mainIconPath = "/img/meteo/scattered-clouds.png";
+                    break;
+                case "cielo coperto":
+                    mainIconPath = "/img/meteo/broken-clouds.png";
+                    break;
+                case "rovescio di pioggia":
+                    mainIconPath = "/img/meteo/shower-rain.png";
+                    break;
+                case "pioggia leggera":
+                    mainIconPath = "/img/meteo/rain.png";
+                    break;
+                case "temporale":
+                    mainIconPath = "/img/meteo/thunderstorm.png";
+                    break;
+                case "neve":
+                    mainIconPath = "/img/meteo/snow.png";
+                    break;
+                case "foschia":
+                    mainIconPath = "/img/meteo/mist.png";
+                    break;
+                default:
+                    mainIconPath = "/img/meteo/default.png";
+                    break;
+            }
+
+            $(".mainWeatherIcon").attr("src", mainIconPath);
+
+
+
+
+            $(".card").each(function () {
+                // Recupera la descrizione dalla data attribute
+                var desc = $(this).data("description");
+                if (!desc)
+                    desc = ""; // fallback nel caso non fosse presente
+
+                desc = desc.toLowerCase().trim();
+                var iconPath = "/img/meteo/default.png"; // default
+
+                switch (desc) {
+                    case "cielo sereno":
+                        iconPath = "/img/meteo/clear.png";
+                        break;
+                    case "poche nuvole":
+                        iconPath = "/img/meteo/few-clouds.png";
+                        break;
+                    case "nuvole sparse":
+                    case "nubi sparse":
+                        iconPath = "/img/meteo/scattered-clouds.png";
+                        break;
+                    case "cielo coperto":
+                        iconPath = "/img/meteo/broken-clouds.png";
+                        break;
+                    case "rovescio di pioggia":
+                        iconPath = "/img/meteo/shower-rain.png";
+                        break;
+                    case "pioggia leggera":
+                        iconPath = "/img/meteo/rain.png";
+                        break;
+                    case "temporale":
+                        iconPath = "/img/meteo/thunderstorm.png";
+                        break;
+                    case "neve":
+                        iconPath = "/img/meteo/snow.png";
+                        break;
+                    case "foschia":
+                        iconPath = "/img/meteo/mist.png";
+                        break;
+                    default:
+                        iconPath = "/img/meteo/default.png";
+                        break;
+                }
+                // Assegna l'icona nella card corrente
+                $(this).find(".weatherIcon").attr("src", iconPath);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="title">Easy Weather</h1>
+
+<div class="search" style="position: relative;">
+    <img height="20" src="~/img/cerca.png" alt="Cerca" />
+    <input type="search" id="citySearch" placeholder="Cerca" autocomplete="off" />
+</div>
+
+<div id="suggestions" class="suggestions" style="display:none;"></div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#citySearch").on("input", function () {
+                const query = $(this).val().trim();
+                $("#suggestions").toggle(!!query);
+
+                if (query.length < 3) return;
+
+                // Aggiungi un timestamp per evitare caching
+                $.ajax({
+                    url: '/location/get',
+                    data: { q: query, limit: 10, t: new Date().getTime() },
+                    cache: false, // forza il bypass della cache
+                    dataType: 'json',
+                    success: function (locations) {
+                        if (!locations?.length) return;
+
+                        const suggestions = locations.map(l => `
+                                <li>
+                                    <a href="/weather?latitude=${l.coordinates.latitude}&longitude=${l.coordinates.longitude}&city=${encodeURIComponent(l.name)}">
+                                        ${l.name}, ${l.country}
+                                    </a>
+                                </li>
+                            `).join('');
+
+                        $("#suggestions").html(`<ul>${suggestions}</ul>`).show();
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    body {
+        align-items: flex-start;
+        padding: 0;
+    }
+
+    .wrapper {
+        background: transparent;
+        backdrop-filter: none;
+        border: none;
+        box-shadow: none;
+        height: auto;
+        width: auto;
+        margin-top: 100px;
+        overflow: visible;
+    }
+
+    .suggestions {
+        height: auto;
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+        z-index: 1000;
+        background: transparent;
+        border-radius: 20px;
+        padding: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px) !important;
+    }
+
+        .suggestions ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .suggestions li {
+            color: #fff;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            outline: 2px solid rgba(255, 255, 255, 0);
+            transition: all 0.5s ease;
+        }
+
+            .suggestions li:hover {
+                outline: 2px solid rgba(255, 255, 255, 0.2);
+                transition: all 0.5s ease;
+            }
+</style>

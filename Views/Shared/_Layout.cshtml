@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EasyWeather</title>
+    @RenderSection("Styles", false)
+    <link rel="stylesheet" media="all" href="~/css/site.css" />   
+    
+
+
+
+</head>
+<body>
+
+    <video autoplay muted loop class="video-background">
+        <source src="img/bg/clear.webm" type="video/mp4">
+    </video>
+
+    <div class="overlay"></div>
+
+    <div class="wrapper">
+        @RenderBody()
+    </div>
+
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

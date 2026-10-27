@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="search">
+    <img height="20" src="img/cerca.png" alt="Cerca" />
+    <input type="search" name="Ricerca" value="Camerino" placeholder="Cerca" />
+</div>
+
+<div class="content">
+    <main>
+        <p class="luogo"><span>Camerino</span>, Italia</p>
+        <img width="200" src="/img/meteo/meteo-sun-cloud.png" alt="Alternate Text" />
+        <div class="gradi">
+            <h1>29°C</h1>
+            <p>Si prevede una bella giornata. @Model.Forecast</p>
+        </div>
+
+        <div class="trioData">
+            <span>
+                <img width="25" src="/img/wind.png" alt="Alternate Text" />
+                <p>11km/h</p>
+            </span>
+            <span>
+                <img width="25" src="/img/drop.png" alt="Alternate Text" />
+                <p>02%</p>
+            </span>
+            <span>
+                <img width="25" src="/img/sun.png" alt="Alternate Text" />
+                <p>8Hr</p>
+            </span>
+        </div>
+    </main>
+
+    <div class="hourly">
+        <h1>Hourly Forecast</h1>
+        <div class="framecard">
+            <div class="cards">
+                <div class="card">
+                    <img width="50" src="/img/meteo/meteo-sun.png" alt="Alternate Text" />
+                    <span>
+                        <p>18:00</p>
+                        <h3>20°</h3>
+                    </span>
+                </div>
+                <div class="card">
+                    <img width="50" src="/img/meteo/meteo-sun-cloud.png" alt="Alternate Text" />
+                    <span>
+                        <p>19:00</p>
+                        <h3>18°</h3>
+                    </span>
+                </div>
+                <div class="card">
+                    <img width="50" src="/img/meteo/meteo-clouds.png" alt="Alternate Text" />
+                    <span>
+                        <p>20:00</p>
+                        <h3>16°</h3>
+                    </span>
+                </div>
+                <div class="card">
+                    <img width="50" src="/img/meteo/meteo-sun.png" alt="Alternate Text" />
+                    <span>
+                        <p>18:00</p>
+                        <h3>20°</h3>
+                    </span>
+                </div>
+                <div class="card">
+                    <img width="50" src="/img/meteo/meteo-sun-cloud.png" alt="Alternate Text" />
+                    <span>
+                        <p>19:00</p>
+                        <h3>18°</h3>
+                    </span>
+                </div>
+                <div class="card">
+                    <img width="50" src="/img/meteo/meteo-clouds.png" alt="Alternate Text" />
+                    <span>
+                        <p>20:00</p>
+                        <h3>16°</h3>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

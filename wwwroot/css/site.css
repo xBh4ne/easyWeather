@@ -1,0 +1,217 @@
+* {
+    box-sizing: border-box;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-drag: none;
+    scrollbar-width: none !important;
+}
+
+body {
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 25px;
+    margin: 0;
+    position: relative
+}
+
+.title {
+    text-align: center;
+    font-size: 50px;
+}
+
+.search {
+    display: flex;
+    gap: 10px;
+    width: 800px;
+    height: auto;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    outline: 0;
+    border-radius: 100px;
+    padding: 20px;
+}
+
+    .search input {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        outline: 0;
+        color: white;
+    }
+
+input::placeholder {
+    font-weight: bold;
+    opacity: 0.5;
+    color: white;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+
+.video-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgb(76, 45, 207, 0.4);
+    backdrop-filter: blur(50px);
+}
+
+
+
+.wrapper {
+    padding: 30px;
+    position: relative;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    z-index: 1; /* Assicura che il contenuto sia sopra il video */
+    width: 1000px;
+    height: 700px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: rgb(255, 2155, 255, 0.2) 0px 8px 24px;
+    background: url("../img/grana.png"), rgb(155, 155, 155, 0.2);
+    background-repeat: repeat;
+    border: 2px solid rgb(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.content {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+}
+
+main {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+    main img {
+        text-align: center;
+    }
+
+    main .luogo {
+        font-weight: normal;
+        font-size: 40px;
+    }
+
+        main .luogo span {
+            font-weight: bolder;
+        }
+
+    main .gradi {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+        main .gradi h1 {
+            font-size: 40px;
+            font-weight: bolder;
+        }
+
+        main .gradi p {
+            font-weight: normal;
+        }
+
+    main .trioData {
+        margin-top: 30px;
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+        main .trioData span {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+.hourly {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+}
+
+    .hourly h1 {
+        font-size: 25px;
+        font-weight: normal;
+    }
+
+    .hourly .framecard {
+        width: 100%;
+        position: relative;
+        overflow-y: auto;
+        height: 100%;
+    }
+
+    .hourly .cards {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: auto;
+        width: 100%;
+    }
+
+        .hourly .cards .card {
+            display: flex;
+            width: 100%;
+            padding: 20px;
+            background: rgb(255, 255, 255, 0.2);
+            gap: 10px;
+            border-radius: 20px;
+            align-items: center;
+            height: 100px;
+            justify-content: space-between;
+        }
+
+            .hourly .cards .card span {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                align-items: center;
+            }
+
+                .hourly .cards .card span h3 {
+                    font-size: 30px;
+                }
+
+                .hourly .cards .card span p {
+                    font-weight: normal;
+                }
